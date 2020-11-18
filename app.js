@@ -26,8 +26,9 @@ const conn = mongoose.createConnection(mongoURI, { useNewUrlParser: true },
     () => console.log("Connected to database"));
 
 //Imports Routes
-const uploadRoute = require('./routes/upload');
 const authRoute = require('./routes/auth');
+const uploadRoute = require('./routes/upload');
+
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
 
 // Middleware
@@ -35,8 +36,9 @@ app.use(bodyParser.json());
 app.use(methodOverride('_method'));
 app.set('view engine', 'ejs');
 
-app.use(uploadRoute);
 app.use(authRoute);
+app.use(uploadRoute);
+
 // Init gfs
 
 
@@ -178,6 +180,8 @@ try {
     res.status(400).send("Invalid Token");
 }
 }*/
-app.use(express.static(__dirname + '/app'));
+//app.use(express.static(__dirname + '/app'));
+
+
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log('Server up running ', PORT));
