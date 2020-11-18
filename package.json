@@ -4,8 +4,7 @@
     "description": "restful API",
     "main": "app.js",
     "scripts": {
-        "start": "node app.js",
-        "dev": "nodemon app.js"
+        "start": "nodemon app.js"
     },
     "repository": {
         "type": "git",
@@ -36,7 +35,10 @@
         "mongoose": "^5.10.15",
         "multer": "^1.4.2",
         "multer-gridfs-storage": "^4.2.0",
-        "override": "0.0.1"
+        "override": "0.0.1",
+        "@babel/cli": "^7.12.1",
+        "@babel/preset-env": "^7.12.1",
+        "nodemon": "^2.0.5"
     },
     "devDependencies": {
         "@babel/cli": "^7.12.1",
