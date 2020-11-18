@@ -34,7 +34,7 @@ app.use("/api/user", postsRoutes);
 const mongoURI = process.env.DB_CONNECT;
 
 // Create mongo connection
-const conn = mongoose.createConnection((mongoURI), { useNewUrlParser: true },
+const conn = mongoose.createConnection(" " + mongoURI, { useNewUrlParser: true },
     () => console.log("Connected to database"));
 
 // Init gfs

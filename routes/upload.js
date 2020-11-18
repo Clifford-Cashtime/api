@@ -23,7 +23,7 @@ app.use(methodOverride('_method'));
 const mongoURI = process.env.DB_CONNECT;
 
 // Create mongo connection
-const conn = mongoose.createConnection(mongoURI);
+const conn = mongoose.createConnection("" + mongoURI, { useNewUrlParser: true });
 
 // Init gfs
 let gfs;
