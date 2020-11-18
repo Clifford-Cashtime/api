@@ -29,10 +29,10 @@ app.set('view engine', 'ejs');
 app.use("/api/user", uploadRoute);
 app.use("/api/user", authRoute);
 // Mongo URI
-const mongoURI = process.env.DB_CONNECT;
+const mongoURI = 'mongodb+srv://cashtime:cashtime@cluster0.hvlvg.mongodb.net/cluster0?retryWrites=true&w=majority';
 
 // Create mongo connection
-const conn = mongoose.createConnection(" " + mongoURI, { useNewUrlParser: true },
+const conn = mongoose.createConnection(mongoURI, { useNewUrlParser: true },
     () => console.log("Connected to database"));
 
 // Init gfs
@@ -175,4 +175,4 @@ try {
 }
 }*/
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log('Server up running ${PORT}!'));
+app.listen(PORT, () => console.log('Server up running ', PORT));

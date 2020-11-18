@@ -20,10 +20,10 @@ var urlencodedParser = bodyParser.urlencoded({ extended: false });
 app.set('view engine', 'ejs');
 app.use(methodOverride('_method'));
 // Mongo URI
-const mongoURI = process.env.DB_CONNECT;
+const mongoURI = 'mongodb+srv://cashtime:cashtime@cluster0.hvlvg.mongodb.net/cluster0?retryWrites=true&w=majority';
 
 // Create mongo connection
-const conn = mongoose.createConnection("" + mongoURI, { useNewUrlParser: true });
+const conn = mongoose.createConnection(mongoURI, { useNewUrlParser: true });
 
 // Init gfs
 let gfs;

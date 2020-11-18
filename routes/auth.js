@@ -21,7 +21,7 @@ app.use(methodOverride('_method'));
 const util = require("util");
 const mongoose = require('mongoose');
 
-mongoose.connect(" " + process.env.DB_CONNECT, { useUnifiedTopology: true });
+mongoose.connect('mongodb+srv://cashtime:cashtime@cluster0.hvlvg.mongodb.net/cluster0?retryWrites=true&w=majority', { useUnifiedTopology: true });
 
 
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
