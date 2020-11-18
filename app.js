@@ -18,6 +18,13 @@ const Grid = require('gridfs-stream');
 
 //mongoose.connect("" + process.env.DB_CONNECT, { useNewUrlParser: true }, () => console.log("Connected to database"));
 
+// Mongo URI
+const mongoURI = 'mongodb+srv://cashtime:cashtime@cluster0.hvlvg.mongodb.net/cluster0?retryWrites=true&w=majority';
+
+// Create mongo connection
+const conn = mongoose.createConnection(mongoURI, { useNewUrlParser: true },
+    () => console.log("Connected to database"));
+
 //Imports Routes
 const uploadRoute = require('./routes/upload');
 const authRoute = require('./routes/auth');
@@ -28,16 +35,11 @@ app.use(bodyParser.json());
 app.use(methodOverride('_method'));
 app.set('view engine', 'ejs');
 
-app.use("/api/user", uploadRoute);
-app.use("/api/user", authRoute);
-// Mongo URI
-const mongoURI = 'mongodb+srv://cashtime:cashtime@cluster0.hvlvg.mongodb.net/cluster0?retryWrites=true&w=majority';
-
-// Create mongo connection
-const conn = mongoose.createConnection(mongoURI, { useNewUrlParser: true },
-    () => console.log("Connected to database"));
-
+app.use(uploadRoute);
+app.use(authRoute);
 // Init gfs
+
+
 let gfs;
 
 conn.once('open', () => {
@@ -88,18 +90,18 @@ const upload = multer({ storage });
             res.render('index', { files: files });
         }
     });
-});
+});*/
 
 // @route POST /upload
 // @desc  Uploads file to DB
 /*post('/upload', upload.single('file'), urlencodedParser, async(req, res) => {
     // res.json({ file: req.file });
     res.redirect('/');
-});
+});*/
 
 // @route GET /files
 // @desc  Display all files in JSON
-get('/files', (req, res) => {
+/*get('/files', (req, res) => {
     gfs.files.find().toArray((err, files) => {
         // Check if files
         if (!files || files.length === 0) {
@@ -111,11 +113,11 @@ get('/files', (req, res) => {
         // Files exist
         return res.json(files);
     });
-});
+});*/
 
 // @route GET /files/:filename
 // @desc  Display single file object
-get('/files/:filename', (req, res) => {
+/*get('/files/:filename', (req, res) => {
     gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
         // Check if file
         if (!file || file.length === 0) {
@@ -126,7 +128,7 @@ get('/files/:filename', (req, res) => {
         // File exists
         return res.json(file);
     });
-});
+});*/
 
 // @route GET /image/:filename
 // @desc Display Image
@@ -150,7 +152,7 @@ get('/files/:filename', (req, res) => {
             });
         }
     });
-});
+});*/
 
 // @route DELETE /files/:id
 // @desc  Delete file
@@ -176,6 +178,6 @@ try {
     res.status(400).send("Invalid Token");
 }
 }*/
-app.use(express.static(__dirname + '/app.js'));
+app.use(express.static(__dirname + '/app'));
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log('Server up running ', PORT));

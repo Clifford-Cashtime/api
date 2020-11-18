@@ -12,7 +12,7 @@ const path = require('path');
 const methodOverride = require('method-override');
 
 
-const GridFsStorage = require('multer-gridfs-storage');
+const GridFSBucket = require('multer-gridfs-storage');
 const Grid = require('gridfs-stream');
 
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
@@ -34,8 +34,8 @@ conn.once('open', () => {
 });
 
 // Create storage engine
-const storage = new GridFsStorage({
-    url: "" + mongoURI,
+const storage = new GridFSBucket({
+    url: mongoURI,
     file: (req, file) => {
         return new Promise((resolve, reject) => {
             crypto.randomBytes(16, (err, buf) => {
@@ -57,7 +57,7 @@ const upload = multer({ storage });
 // @route GET /
 // @desc Loads form
 
-router.get('/upload', (req, res) => {
+router.get('/', (req, res) => {
     gfs.files.find().toArray((err, files) => {
         // Check if files
         if (!files || files.length === 0) {
@@ -82,17 +82,17 @@ router.get('/upload', (req, res) => {
 // @desc  Uploads file to DB
 
 router.post('/upload', upload.single('file'), urlencodedParser, async(req, res) => {
-    var files;
     //res.json({ file: req.file });
-    res.render('index.ejs', { files: files });
+    res.redirect('/');
 });
 
 // @route GET /files
 // @desc  Display all files in JSON
-
+var files;
 router.get('/files', (req, res) => {
     gfs.files.find().toArray((err, files) => {
         // Check if file
+        var files;
         if (!files || files.length === 0) {
             return res.status(404).json({
                 err: 'No files exist'
@@ -100,6 +100,7 @@ router.get('/files', (req, res) => {
         }
 
         // Files exist
+        //res.redirect("/", { files: files })
         return res.json(files);
     });
 });
@@ -154,7 +155,7 @@ router.delete('/files/:id', (req, res) => {
             return res.status(404).json({ err: err });
         }
 
-        res.render('index.ejs', { files: files });
+        res.redirect('/');
     });
 });
 module.exports = router;
