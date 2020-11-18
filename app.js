@@ -19,7 +19,6 @@ const Grid = require('gridfs-stream');
 //Imports Routes
 const uploadRoute = require('./routes/upload');
 const authRoute = require('./routes/auth');
-const postsRoutes = require('./routes/posts');
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
 
 // Middleware
@@ -29,13 +28,12 @@ app.set('view engine', 'ejs');
 
 app.use("/api/user", uploadRoute);
 app.use("/api/user", authRoute);
-app.use("/api/user", postsRoutes);
 // Mongo URI
 const mongoURI = process.env.DB_CONNECT;
 
 // Create mongo connection
 const conn = mongoose.createConnection(" " + mongoURI, { useNewUrlParser: true },
-    () => console.log("Connected to database" + $(PORT)));
+    () => console.log("Connected to database"));
 
 // Init gfs
 let gfs;
@@ -177,4 +175,4 @@ try {
 }
 }*/
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log("Server up running"));
+app.listen(PORT, () => console.log('Server up running ${PORT}!'));
