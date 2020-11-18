@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <style>
+        img {
+            width: 100%;
+        }
+    </style>
+    <title>Register</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 m-auto">
+                <h1 class="text-center display-4 my-4">Register</h1>
+                <form target="_blank" method="post" action="/api/user/register" onsubmit="return validationRedirect();">
+                    <div>
+                        <input type="text" id="name" name="name" required placeholder="Full Names">
+                    </div>
+                    <div>
+                        <br><input type="email" id="email" name="email" required placeholder="Valid Email">
+                    </div>
+                    <div>
+                        <br><input type="password" id="password" name="password" required placeholder="Password">
+                    </div>
+
+                    <br><input type="submit" value="Register" class="btn btn-primary btn-block " />
+                </form>
+                <a href="/api/user/login">Login</a>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
