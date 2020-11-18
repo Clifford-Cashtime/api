@@ -14,6 +14,8 @@ const methodOverride = require('method-override');
 
 const GridFsStorage = require('multer-gridfs-storage');
 const Grid = require('gridfs-stream');
+
+
 //mongoose.connect("" + process.env.DB_CONNECT, { useNewUrlParser: true }, () => console.log("Connected to database"));
 
 //Imports Routes
@@ -174,5 +176,6 @@ try {
     res.status(400).send("Invalid Token");
 }
 }*/
+app.use(express.static(__dirname + '/app.js'));
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log('Server up running ', PORT));
