@@ -7,9 +7,11 @@ const { registerValidation, loginValidation } = require('../validation');
 const express = require('express');
 const crypto = require('crypto');
 const http = require('http');
-
+const passport = require('passport');
+const flash = require('express-flash')
 const app = express();
 const bodyParser = require('body-parser');
+
 
 const ejs = require('ejs');
 
@@ -17,14 +19,23 @@ const ejs = require('ejs');
 app.engine('ejs', require('ejs').renderFile);
 app.set('view engine', 'ejs');
 app.use(methodOverride('_method'));
+app.use(flash())
 
 const util = require("util");
 const mongoose = require('mongoose');
+
+mongoose.set('useNewUrlParser', true);
+mongoose.set('useFindAndModify', false);
+mongoose.set('useCreateIndex', true);
+mongoose.set('useUnifiedTopology', true);
+
 
 mongoose.connect('mongodb+srv://cashtime:cashtime@cluster0.hvlvg.mongodb.net/cluster0?retryWrites=true&w=majority', { useUnifiedTopology: true });
 
 
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
+
+router.get('/', (req, res) => res.render('welcome'));
 //get register
 router.get('/register', (req, res) => {
     res.render('register.ejs');
@@ -78,14 +89,32 @@ router.post('/login', urlencodedParser, async(req, res) => {
     const validPass = await bcrypt.compare(req.body.password, user.password);
     if (!validPass) return res.status(400).send('Invalid Password')
 
-    res.render('index.ejs', { files: files });
+    res.render('upload.ejs', { files: files });
     //Create and assign a token...Allows multiple requests
     //const token = jwt.sign({ _id: user._id }, "" + process.env.TOKEN_SECRET);
     //res.header('auth-token', token).send(token);
-
+    successRedirect: '/'
+    failureRedirect: '/login'
+    failureFlash: true
 });
 //get login
 router.get('/login', (req, res) => {
     res.render('login.ejs');
 });
+
+/*function checkAuthenticated(req, res, next) {
+    if (req.isAuthenticated()) {
+        return next()
+    }
+
+    res.redirect('/login')
+}
+
+function checkNotAuthenticated(req, res, next) {
+    if (req.isAuthenticated()) {
+        return res.redirect('/')
+    }
+    next()
+}*/
+
 module.exports = router;

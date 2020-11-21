@@ -1,32 +1,36 @@
 const express = require('express');
-const app = express();
 const router = require('express').Router();
-const jwt = require('jsonwebtoken');
-const mongoose = require('mongoose');
-const crypto = require('crypto');
 const bodyParser = require('body-parser');
-let ejs = require('ejs');
-app.engine('ejs', require('ejs').renderFile);
-const multer = require('multer');
 const path = require('path');
+const crypto = require('crypto');
+const mongoose = require('mongoose');
+const multer = require('multer');
+const GridFsStorage = require('multer-gridfs-storage');
+const Grid = require('gridfs-stream');
 const methodOverride = require('method-override');
 
+const app = express();
 
-const GridFSBucket = require('multer-gridfs-storage');
-const Grid = require('gridfs-stream');
-
-var urlencodedParser = bodyParser.urlencoded({ extended: false });
-
-app.set('view engine', 'ejs');
+mongoose.set('useNewUrlParser', true);
+mongoose.set('useFindAndModify', false);
+mongoose.set('useCreateIndex', true);
+mongoose.set('useUnifiedTopology', true);
+// Middleware
+app.use(bodyParser.json());
 app.use(methodOverride('_method'));
+app.engine('ejs', require('ejs').renderFile);
+app.set('views', './views');
+app.set('view engine', 'ejs');
+
 // Mongo URI
 const mongoURI = 'mongodb+srv://cashtime:cashtime@cluster0.hvlvg.mongodb.net/cluster0?retryWrites=true&w=majority';
 
 // Create mongo connection
-const conn = mongoose.createConnection(mongoURI, { useNewUrlParser: true });
+const conn = mongoose.createConnection(mongoURI);
 
 // Init gfs
 let gfs;
+
 conn.once('open', () => {
     // Init stream
     gfs = Grid(conn.db, mongoose.mongo);
@@ -34,7 +38,7 @@ conn.once('open', () => {
 });
 
 // Create storage engine
-const storage = new GridFSBucket({
+const storage = new GridFsStorage({
     url: mongoURI,
     file: (req, file) => {
         return new Promise((resolve, reject) => {
@@ -56,12 +60,11 @@ const upload = multer({ storage });
 
 // @route GET /
 // @desc Loads form
-
-router.get('/', (req, res) => {
+router.get('/upload', (req, res) => {
     gfs.files.find().toArray((err, files) => {
         // Check if files
         if (!files || files.length === 0) {
-            res.render('index', { files: false });
+            res.render('upload', { files: false });
         } else {
             files.map(file => {
                 if (
@@ -73,26 +76,25 @@ router.get('/', (req, res) => {
                     file.isImage = false;
                 }
             });
-            res.render('index', { files: files });
+            res.render('upload', { files: files });
         }
     });
 });
 
+
+
 // @route POST /upload
 // @desc  Uploads file to DB
-
-router.post('/upload', upload.single('file'), urlencodedParser, async(req, res) => {
-    //res.json({ file: req.file });
-    res.redirect('/');
+router.post('/upload', upload.single('file'), (req, res) => {
+    // res.json({ file: req.file });
+    res.redirect('../upload');
 });
 
 // @route GET /files
 // @desc  Display all files in JSON
-var files;
 router.get('/files', (req, res) => {
     gfs.files.find().toArray((err, files) => {
-        // Check if file
-        var files;
+        // Check if files
         if (!files || files.length === 0) {
             return res.status(404).json({
                 err: 'No files exist'
@@ -100,14 +102,12 @@ router.get('/files', (req, res) => {
         }
 
         // Files exist
-        //res.redirect("/", { files: files })
         return res.json(files);
     });
 });
 
 // @route GET /files/:filename
 // @desc  Display single file object
-
 router.get('/files/:filename', (req, res) => {
     gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
         // Check if file
@@ -147,15 +147,28 @@ router.get('/image/:filename', (req, res) => {
 
 // @route DELETE /files/:id
 // @desc  Delete file
-
 router.delete('/files/:id', (req, res) => {
     gfs.remove({ _id: req.params.id, root: 'uploads' }, (err, gridStore) => {
-        var files;
         if (err) {
             return res.status(404).json({ err: err });
         }
 
-        res.redirect('/');
+        res.redirect('../upload');
     });
 });
+
+/*function checkAuthenticated(req, res, next) {
+    if (req.isAuthenticated()) {
+        return next()
+    }
+
+    res.redirect('/login')
+}
+
+function checkNotAuthenticated(req, res, next) {
+    if (req.isAuthenticated()) {
+        return res.redirect('/')
+    }
+    next()
+}*/
 module.exports = router;

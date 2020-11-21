@@ -44,17 +44,17 @@
                 <p class="text-center lead mb-5">Select File and Submit</p>
                 <form action="/upload" method="POST" enctype="multipart/form-data">
                     <div class="custom-file mb-3">
-                        <input type="file" name="file" id="file" class="custom-file-input">
-                        <label for="file" class="custom-file-label">Choose File</label>
+                       <input type="file" name="file" id="file" class="custom-file-input">
+                       <label for="file" class="custom-file-label">Choose File</label>
                     </div>
-                    <input type="submit" value="Submit" class="btn btn-primary btn-block">
+                    <input type="submit" value="Submit" class="btn btn-primary btn-block">`
                 </form>
                 <hr>
                 <% if(files){ %>
                     <% files.forEach(function(file) { %>
                         <div class="card card-body mb-3">
                             <% if(file.isImage) { %>
-                                <img src="image/<%= file.filename %>" alt="">
+                             <img src="image/<%= file.filename %>" alt="">
                                 <% } else { %>
                                     <%= file.filename %>
                                         <% } %>
@@ -66,10 +66,8 @@
                             <% } else { %>
                                 <p>No files to show</p>
                                 <% } %>
-
             </div>
         </div>
     </div>
 </body>
-
 </html>
