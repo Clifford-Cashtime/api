@@ -1,12 +1,100 @@
-<div class="row mt-5">
-  <div class="col-md-6 m-auto">
-    <div class="card card-body text-center">
-      <h1><i class="fab fa-node-js fa-3x"></i></h1>
-      <p>Create an account or login</p>
-      <a href="/register" class="btn btn-primary btn-block mb-2"
-        >Register</a
-      >
-      <a href="/login" class="btn btn-secondary btn-block">Login</a>
-    </div>
+<!DOCTYPE html>
+<html  lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://bootswatch.com/4/united/bootstrap.min.css" />
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <link rel="stylesheet" href="welcome.css" />
+    <style>
+        img {
+            width: 100%;
+        }
+    </style>
+    <title>Create Account</title>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-info text-capitalize">
+  <a class="navbar-brand" href="#">Create Account</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarColor02">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Home
+          <span class="sr-only">(current)</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/register">Register</a>
+      </li>
+      <li class="nav-item ">
+        <a class="nav-link" href="/login">Login</a>
+      </li>
+    </ul>
+    <form class="form-inline my-2 my-lg-0">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+          <li class="nav-item ">
+             <a class="nav-link" href="https://www.linkedin.com/in/clifford-mathebula-70790b1a6">Linkedin</a>
+         </li>
+          <li class="nav-item ">
+            <a class="nav-link" href="https://web.facebook.com/clifford.mongwe.5/about">facebook</a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link" href="https://twitter.com/CliffordChTm1?s=08">twitter</a>
+          </li>
+         <li class="nav-item ">
+             <a class="nav-link" href=" git+https://github.com/Clifford-Cashtime/api.git">github</a>
+         </li>
+        
+     </li>
+    </ul>
+    </form>
   </div>
+</nav>
+<section id="best-features" class="text-center">
+
+ <!--Mask-->
+<div id="intro" class="view">
+
+    <div class="mask rgba-black-strong">
+
+        <div class="container-fluid d-flex align-items-center justify-content-center h-100">
+
+            <div class="row d-flex justify-content-center text-center">
+
+                <div class="col-md-10">
+
+                    <!-- Heading -->
+                    <h2 class="display-4 font-weight-bold white-text pt-5 mb-2">Welcome</h2>
+
+                    <!-- Divider -->
+                    <hr class="hr-light">
+
+                    <!-- Description -->
+                    <h4 class="white-text my-4">Please, Create an Account or LogIn if Already Registered.</h4>
+                    <button type="button" class="btn btn-outline-white" href="/register">Register<i class="fas fa-user-plus ml-2"></i></button>
+                    <br><button type="button" class="btn btn-outline-white" href="/login">Login<i class="fa fa-user ml-2"></i></button>
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
 </div>
+<!--/.Mask-->
+
+</section>
+<!--Section: Best Features-->
+</body>
+
+</html>
