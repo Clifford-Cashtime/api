@@ -35,8 +35,12 @@ mongoose.connect('mongodb+srv://cashtime:cashtime@cluster0.hvlvg.mongodb.net/clu
 
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
 
-router.get('/', (req, res) => res.render('welcome'));
+router.get('/', (req, res) => res.render('welcome.ejs'));
 //get register
+
+router.get('/welcome', (req, res) => {
+    res.render('welcome.ejs');
+});
 router.get('/register', (req, res) => {
     res.render('register.ejs');
 });
